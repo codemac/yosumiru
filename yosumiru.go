@@ -2,14 +2,13 @@
 package main
 
 import (
+	"bufio"
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
-	//	"net/http"
-	"os/exec"
-	//	"strings"
-	"bufio"
+	"net/http"
 	"os"
+	"os/exec"
 )
 
 func main() {
@@ -99,13 +98,13 @@ type RssEnclosure struct {
 const ARCH_NEWS_FEED = "https://www.archlinux.org/feeds/news/"
 
 func LastFeeds() bool {
-	// resp, err := http.Get(ARCH_NEWS_FEED)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer resp.Body.Close()
+	resp, err := http.Get(ARCH_NEWS_FEED)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
 
-	bod, err := ioutil.ReadFile("newsfeed.txt")
+	bod, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
